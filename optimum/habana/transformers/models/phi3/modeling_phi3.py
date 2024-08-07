@@ -642,12 +642,6 @@ class GaudiPhi3ForCausalLM(Phi3ForCausalLM):
                     past_length = past_key_values.seen_tokens
                     max_cache_length = past_key_values.get_max_length()
                 else:
-                    print('Sep')
-                    print(len(past_key_values))
-                    print(past_key_values[0])
-                    print(len(past_key_values[1]))
-                    print(type(past_key_values[1][0]))
-                    print(type(past_key_values[1][1]))
                     cache_length = past_length = past_key_values[0][0].shape[2]
                     max_cache_length = None
 
