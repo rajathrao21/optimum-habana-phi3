@@ -83,6 +83,10 @@ from .models import (
     GaudiPhiDecoderLayer,
     GaudiPhiForCausalLM,
     GaudiPhiModel,
+    GaudiPhi3Attention,
+    GaudiPhi3DecoderLayer,
+    GaudiPhi3ForCausalLM,
+    GaudiPhi3Model,
     GaudiQwen2Attention,
     GaudiQwen2DecoderLayer,
     GaudiQwen2ForCausalLM,
@@ -97,6 +101,7 @@ from .models import (
     LlamaConfig,
     MistralConfig,
     MixtralConfig,
+    Phi3Config,
     _gaudi_wav2vec2_compute_mask_indices,
     _gaudi_wav2vec2_mask_hidden_states,
     gaudi_albert_forward,
@@ -160,6 +165,7 @@ from .models import (
     gaudi_persimmon_attention_forward,
     gaudi_persimmon_decoder_layer_forward,
     gaudi_persimmon_model_forward,
+    gaudi_phi3_rmsnorm_forward,
     gaudi_qwen2_rmsnorm_forward,
     gaudi_rot_matmul,
     gaudi_rot_vec_mul,
@@ -431,6 +437,14 @@ def adapt_transformers_to_gaudi():
     transformers.models.phi.modeling_phi.PhiAttention = GaudiPhiAttention
     transformers.models.phi.modeling_phi.PhiDecoderLayer = GaudiPhiDecoderLayer
     transformers.models.phi.modeling_phi.PhiModel = GaudiPhiModel
+
+    # Optimization for phi3 on Gaudi
+    transformers.models.phi3.modeling_phi3.Phi3ForCausalLM = GaudiPhi3ForCausalLM
+    transformers.models.phi3.modeling_phi3.Phi3Attention = GaudiPhi3Attention
+    transformers.models.phi3.modeling_phi3.Phi3DecoderLayer = GaudiPhi3DecoderLayer
+    transformers.models.phi3.modeling_phi3.Phi3Model = GaudiPhi3Model
+    transformers.models.phi3.modeling_phi3.Phi3RMSNorm.forward = gaudi_phi3_rmsnorm_forward
+    transformers.models.phi3.configuration_phi3.Phi3Config = Phi3Config
 
     # Optimization for gemma on Gaudi
     transformers.models.gemma.modeling_gemma.GemmaForCausalLM = GaudiGemmaForCausalLM
