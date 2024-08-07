@@ -164,6 +164,14 @@ from .phi import (
     GaudiPhiForCausalLM,
     GaudiPhiModel,
 )
+from .phi3 import (
+    Phi3Config,
+	GaudiPhi3Attention,
+	GaudiPhi3DecoderLayer,
+	GaudiPhi3ForCausalLM,
+	GaudiPhi3Model,
+	gaudi_phi3_rmsnorm_forward,
+)
 from .qwen2 import (
     GaudiQwen2Attention,
     GaudiQwen2DecoderLayer,
