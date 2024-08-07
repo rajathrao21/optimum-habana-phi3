@@ -188,7 +188,7 @@ class GaudiPhi3Attention(Phi3Attention):
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         """
-        Modified from Phi3Attention.forward: https://github.com/huggingface/transformers/blob/v4.41.0/src/transformers/models/phi3/modeling_phi3.py
+        Modified from Phi3Attention.forward: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
         The only differences are:
         - add new args token_idx
         - optimize KV cache
@@ -341,7 +341,7 @@ class GaudiPhi3DecoderLayer(nn.Module):
         **kwargs,
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
-        Copied from Phi3DecoderLayer.forward: https://github.com/huggingface/transformers/blob/v4.41.0/src/transformers/models/phi3/modeling_phi3.py
+        Copied from Phi3DecoderLayer.forward: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
         The only differences are:
         - add new args token_idx
         - add new args reuse_cache
@@ -406,7 +406,7 @@ class GaudiPhi3Model(Phi3Model):
         cache_idx: Optional[int] = None,
     ) -> Union[Tuple, BaseModelOutputWithPast]:
         """
-        Copied from Phi3Model.forward: https://github.com/huggingface/transformers/blob/v4.41.0/src/transformers/models/phi3/modeling_phi3.py
+        Copied from Phi3Model.forward: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
         The only differences are:
         - add new args token_idx
         - add new args reuse_cache
@@ -555,7 +555,7 @@ class GaudiPhi3ForCausalLM(Phi3ForCausalLM):
         cache_idx: Optional[int] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         """
-        Inherits from Phi3ForCausalLM: https://github.com/huggingface/transformers/blob/v4.41.0/src/transformers/models/phi3/modeling_phi3.py
+        Inherits from Phi3ForCausalLM: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
         The only differences are:
         - add new args token_idx
         - add new args reuse_cache
@@ -623,7 +623,7 @@ class GaudiPhi3ForCausalLM(Phi3ForCausalLM):
         self, input_ids, past_key_values=None, attention_mask=None, inputs_embeds=None, token_idx=None, **kwargs
     ):
         """
-        Inherits from PhiForCausalLM: https://github.com/huggingface/transformers/blob/v4.41.0/src/transformers/models/phi3/modeling_phi3.py
+        Inherits from PhiForCausalLM: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
         The only differences are:
         - add new args token_idx
         - add token_idx into model_inputs
