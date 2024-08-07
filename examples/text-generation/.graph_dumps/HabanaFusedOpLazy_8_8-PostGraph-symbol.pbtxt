@@ -1,0 +1,1942 @@
+node {
+  name: "tensor_0_/placeholder/0"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32064
+        }
+        dim {
+          size: 2048
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "float32"
+    }
+  }
+}
+node {
+  name: "Slice2426"
+  op: "Slice"
+  input: "tensor_0_/placeholder/0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "0"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_0_/placeholder/0  |  Sizes = [16,2048,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4202692608, 262668288, 128256, 4]  |  data = 0, sizeInBytes = 4202692608  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x40000000000  |  userMemorySection(type=Persistent, id=4)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_2_id_10549_aten__slice_memcpy_4909  |  Sizes = [16,1,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4202692608, 262668288, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = tensor_0_/placeholder/0, type = slice, offset: 262540032  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "tensor_24_/placeholder/0"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2048
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "Slice2441"
+  op: "Slice"
+  input: "tensor_24_/placeholder/0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "1"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_24_/placeholder/0  |  Sizes = [2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [8192, 4]  |  data = 0, sizeInBytes = 8192  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xf0000000000  |  userMemorySection(type=Persistent, id=15)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_25_id_10586_aten__slice  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [8192, 4]  |  data = 0, sizeInBytes = 4  |  isAliased = tensor_24_/placeholder/0, type = slice, offset: 8188  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "tensor_2_id_10549_aten__slice_memcpy_4909_internal"
+  op: "DmaMemcpy"
+  input: "Slice2426"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "2"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_2_id_10549_aten__slice_memcpy_4909  |  Sizes = [16,1,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4202692608, 262668288, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = tensor_0_/placeholder/0, type = slice, offset: 262540032  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_2_id_10549_aten__slice  |  Sizes = [16,1,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = tensor_5_id_10555_aten__clone, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "Squeeze2427"
+  op: "Squeeze"
+  input: "tensor_2_id_10549_aten__slice_memcpy_4909_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "3"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_2_id_10549_aten__slice  |  Sizes = [16,1,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = tensor_5_id_10555_aten__clone, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_5_id_10555_aten__clone  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x50000000000  |  userMemorySection(type=Persistent, id=5)  |  "
+    }
+  }
+}
+node {
+  name: "TPC2430_complex/softmax_fwd_f32_0"
+  op: "softmax_fwd_f32"
+  input: "Squeeze2427"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "4"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_5_id_10555_aten__clone  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x50000000000  |  userMemorySection(type=Persistent, id=5)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_6_id_10557_aten___softmax  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x60000000000  |  userMemorySection(type=Persistent, id=6)  |  "
+    }
+  }
+}
+node {
+  name: "tensor_7_/placeholder/1"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/random_exponential_f32_0"
+  op: "random_exponential_f32"
+  input: "tensor_7_/placeholder/1"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "5"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_7_/placeholder/1  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x70000000000  |  userMemorySection(type=Persistent, id=7)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "f32-1_4640  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x0  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/constant_i32_4"
+  op: "constant_i32"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "6"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-5_4642  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  location = in DRAM  |  dramOffset = 0xa0000000000  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/div_f32_2_complex/div_f32_0"
+  op: "div_f32"
+  input: "TPC2430_complex/softmax_fwd_f32_0"
+  input: "TPC2431_complex/random_exponential_f32_0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "7"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_6_id_10557_aten___softmax  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x60000000000  |  userMemorySection(type=Persistent, id=6)  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "f32-1_4640  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x0  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "f32-3_4641  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/reinterpret_cast_8"
+  op: "ReinterpretCast"
+  input: "TPC2431_complex/div_f32_2_complex/div_f32_0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "8"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "f32-3_4641  |  Sizes = [16,32064]  |  float32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-9_4644  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x1f5000  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/greater_i32_10_complex/greater_i32_0_reshape_TPC_out1"
+  op: "StaticReshape"
+  input: "TPC2431_complex/reinterpret_cast_8"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "9"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-9_4644  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x1f5000  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "_reshaped_4846  |  Sizes = [2004,256]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 1024, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/constant_i32_6"
+  op: "constant_i32"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "10"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-7_4643  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  location = in DRAM  |  dramOffset = 0xa0000000080  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/greater_i32_10_complex/greater_i32_0_optimized"
+  op: "greater_i32"
+  input: "TPC2431_complex/greater_i32_10_complex/greater_i32_0_reshape_TPC_out1"
+  input: "TPC2431_complex/constant_i32_4"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "11"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "_reshaped_4846  |  Sizes = [2004,256]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 1024, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-5_4642  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  location = in DRAM  |  dramOffset = 0xa0000000000  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "_reshaped_4847  |  Sizes = [2004,256]  |  int8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [513024, 256, 1]  |  data = 0, sizeInBytes = 513024  |  location = in DRAM  |  dramOffset = 0x3ea000  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/where_i32_12_optimized"
+  op: "where_i32"
+  input: "TPC2431_complex/greater_i32_10_complex/greater_i32_0_optimized"
+  input: "TPC2431_complex/constant_i32_4"
+  input: "TPC2431_complex/constant_i32_6"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "12"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "_reshaped_4847  |  Sizes = [2004,256]  |  int8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [513024, 256, 1]  |  data = 0, sizeInBytes = 513024  |  location = in DRAM  |  dramOffset = 0x3ea000  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-5_4642  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  location = in DRAM  |  dramOffset = 0xa0000000000  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "i32-7_4643  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  location = in DRAM  |  dramOffset = 0xa0000000080  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "_reshaped_4851  |  Sizes = [2004,256]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 1024, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-13_4646, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/where_i32_12_reshape_TPC_out0"
+  op: "StaticReshape"
+  input: "TPC2431_complex/where_i32_12_optimized"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "13"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "_reshaped_4851  |  Sizes = [2004,256]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 1024, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-13_4646, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-13_4646  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x467400  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/bitwise_xor_i32_14"
+  op: "bitwise_xor_i32"
+  input: "TPC2431_complex/reinterpret_cast_8"
+  input: "TPC2431_complex/where_i32_12_reshape_TPC_out0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "14"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-9_4644  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x1f5000  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-13_4646  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  location = in DRAM  |  dramOffset = 0x467400  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-15_4647  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "tensor-4842"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_UINT8
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 6144
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "uint8"
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/generate_bitonic_chunks_i32_16"
+  op: "generate_bitonic_chunks_i32"
+  input: "TPC2431_complex/bitwise_xor_i32_14"
+  input: "tensor-4842"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "15"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-15_4647  |  Sizes = [16,32064]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2052096, 128256, 4]  |  data = 0, sizeInBytes = 2052096  |  isAliased = i32-9_4644, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "tensor-4842  |  Sizes = [6144]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [6144, 1]  |  data = 0x55a3c346e800, sizeInBytes = 6144  |  location = in DRAM  |  dramOffset = 0x10000027f80  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-17_4648  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  location = in DRAM  |  dramOffset = 0x65c400  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-18_4649  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  location = in DRAM  |  dramOffset = 0x85c400  |  "
+    }
+  }
+}
+node {
+  name: "tensor-4843"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_UINT8
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2304
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "uint8"
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/small_bitonic_merge_i32_19"
+  op: "small_bitonic_merge_i32"
+  input: "TPC2431_complex/generate_bitonic_chunks_i32_16"
+  input: "TPC2431_complex/generate_bitonic_chunks_i32_16"
+  input: "tensor-4843"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "16"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-17_4648  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  location = in DRAM  |  dramOffset = 0x65c400  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-18_4649  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  location = in DRAM  |  dramOffset = 0x85c400  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "tensor-4843  |  Sizes = [2304]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2304, 1]  |  data = 0x55a1ff5b4900, sizeInBytes = 2304  |  location = in DRAM  |  dramOffset = 0x10000029780  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-20_4650  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-17_4648, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-21_4651  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-18_4649, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/small_bitonic_merge_i32_22"
+  op: "small_bitonic_merge_i32"
+  input: "TPC2431_complex/small_bitonic_merge_i32_19"
+  input: "TPC2431_complex/small_bitonic_merge_i32_19"
+  input: "tensor-4843"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "17"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-20_4650  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-17_4648, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-21_4651  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-18_4649, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "tensor-4843  |  Sizes = [2304]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2304, 1]  |  data = 0x55a1ff5b4900, sizeInBytes = 2304  |  location = in DRAM  |  dramOffset = 0x10000029780  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-23_4652  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-20_4650, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-24_4653  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-21_4651, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/small_bitonic_merge_i32_25"
+  op: "small_bitonic_merge_i32"
+  input: "TPC2431_complex/small_bitonic_merge_i32_22"
+  input: "TPC2431_complex/small_bitonic_merge_i32_22"
+  input: "tensor-4843"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "18"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-23_4652  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-20_4650, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-24_4653  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-21_4651, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "tensor-4843  |  Sizes = [2304]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2304, 1]  |  data = 0x55a1ff5b4900, sizeInBytes = 2304  |  location = in DRAM  |  dramOffset = 0x10000029780  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-26_4654  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-23_4652, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-27_4655  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-24_4653, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/large_bitonic_merge_i32_28"
+  op: "large_bitonic_merge_i32"
+  input: "TPC2431_complex/small_bitonic_merge_i32_25"
+  input: "TPC2431_complex/small_bitonic_merge_i32_25"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "19"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-26_4654  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-23_4652, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-27_4655  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-24_4653, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-29_4656  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-26_4654, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-30_4657  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-27_4655, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/small_bitonic_merge_i32_31"
+  op: "small_bitonic_merge_i32"
+  input: "TPC2431_complex/large_bitonic_merge_i32_28"
+  input: "TPC2431_complex/large_bitonic_merge_i32_28"
+  input: "tensor-4843"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "20"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-29_4656  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-26_4654, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-30_4657  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-27_4655, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "tensor-4843  |  Sizes = [2304]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2304, 1]  |  data = 0x55a1ff5b4900, sizeInBytes = 2304  |  location = in DRAM  |  dramOffset = 0x10000029780  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-32_4658  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-29_4656, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-33_4659  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-30_4657, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/large_bitonic_merge_i32_34"
+  op: "large_bitonic_merge_i32"
+  input: "TPC2431_complex/small_bitonic_merge_i32_31"
+  input: "TPC2431_complex/small_bitonic_merge_i32_31"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "21"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-32_4658  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-29_4656, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-33_4659  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-30_4657, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-35_4660  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-32_4658, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-36_4661  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-33_4659, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/large_bitonic_merge_i32_37"
+  op: "large_bitonic_merge_i32"
+  input: "TPC2431_complex/large_bitonic_merge_i32_34"
+  input: "TPC2431_complex/large_bitonic_merge_i32_34"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "22"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-35_4660  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-32_4658, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-36_4661  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-33_4659, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-38_4662  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-35_4660, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-39_4663  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-36_4661, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/small_bitonic_merge_i32_40"
+  op: "small_bitonic_merge_i32"
+  input: "TPC2431_complex/large_bitonic_merge_i32_37"
+  input: "TPC2431_complex/large_bitonic_merge_i32_37"
+  input: "tensor-4843"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "23"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-38_4662  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-35_4660, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "i32-39_4663  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-36_4661, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:2"
+    value {
+      s: "tensor-4843  |  Sizes = [2304]  |  uint8  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2304, 1]  |  data = 0x55a1ff5b4900, sizeInBytes = 2304  |  location = in DRAM  |  dramOffset = 0x10000029780  |  isStaticParam  |  bufferDtype=float32  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "i32-41_4664  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-38_4662, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:1"
+    value {
+      s: "i32-42_4665  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-39_4663, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "i32-41_4664"
+  op: "OutputTensor"
+  input: "TPC2431_complex/small_bitonic_merge_i32_40"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 32768
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "TPC2431_complex/slice_axis_45"
+  op: "SliceAxis"
+  input: "TPC2431_complex/small_bitonic_merge_i32_40"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "24"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "i32-42_4665  |  Sizes = [16,32768]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 2097152  |  isAliased = i32-39_4663, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial_memcpy_4910  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = i32-42_4665, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "tensor_8_id_10564_hpu__multinomial_memcpy_4910_internal"
+  op: "StridedDmaViaTranspose"
+  input: "TPC2431_complex/slice_axis_45"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "25"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial_memcpy_4910  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [2097152, 131072, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = i32-42_4665, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 4, 4]  |  data = 0, sizeInBytes = 64  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x80000000000  |  userMemorySection(type=Persistent, id=8)  |  "
+    }
+  }
+}
+node {
+  name: "TPC2437_optimized"
+  op: "constant_i32"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "26"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "_reshaped_4855  |  Sizes = [4,4]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 16, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_17, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+}
+node {
+  name: "TPC2437_reshape_TPC_out0"
+  op: "StaticReshape"
+  input: "TPC2437_optimized"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "27"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "_reshaped_4855  |  Sizes = [4,4]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 16, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_17, type = alias, offset: 0  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_17  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 4, 4]  |  data = 0, sizeInBytes = 64  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xb0000000000  |  userMemorySection(type=Persistent, id=11)  |  "
+    }
+  }
+}
+node {
+  name: "tensor_12_/placeholder/0"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2048
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "tensor_12_/placeholder/0_memcpy_4906_internal"
+  op: "DmaMemcpy"
+  input: "tensor_12_/placeholder/0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "28"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_12_/placeholder/0  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131072, 8192, 8192, 4]  |  data = 0, sizeInBytes = 131072  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x90000000000  |  userMemorySection(type=Persistent, id=9)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_12_/placeholder/0_memcpy_4906  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 8196, 4]  |  data = 0, sizeInBytes = 131132  |  isAliased = tensor_13_id_1954_aten__view, type = alias, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "Reshape2435"
+  op: "Reshape"
+  input: "tensor_12_/placeholder/0_memcpy_4906_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "29"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_12_/placeholder/0_memcpy_4906  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 8196, 4]  |  data = 0, sizeInBytes = 131132  |  isAliased = tensor_13_id_1954_aten__view, type = alias, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_13_id_1954_aten__view  |  Sizes = [16,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131072  |  isAliased = tensor_14_id_10574_aten__cat, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "tensor_8_id_10564_hpu__multinomial_memcpy_4904_internal"
+  op: "DmaMemcpy"
+  input: "tensor_8_id_10564_hpu__multinomial_memcpy_4910_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "30"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 4, 4]  |  data = 0, sizeInBytes = 64  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x80000000000  |  userMemorySection(type=Persistent, id=8)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial_memcpy_4904  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_14_id_10574_aten__cat, type = concat, offset: 8192  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "Concatenate2436"
+  op: "Concatenate"
+  input: "Reshape2435"
+  input: "tensor_8_id_10564_hpu__multinomial_memcpy_4904_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "31"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_13_id_1954_aten__view  |  Sizes = [16,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131072  |  isAliased = tensor_14_id_10574_aten__cat, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "tensor_8_id_10564_hpu__multinomial_memcpy_4904  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_14_id_10574_aten__cat, type = concat, offset: 8192  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_14_id_10574_aten__cat  |  Sizes = [16,2049]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131136  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xa0000000000  |  userMemorySection(type=Persistent, id=10)  |  "
+    }
+  }
+}
+node {
+  name: "tensor_14_id_10574_aten__cat"
+  op: "OutputTensor"
+  input: "Concatenate2436"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2049
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "tensor_18_/placeholder/0"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2048
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "tensor_18_/placeholder/0_memcpy_4907_internal"
+  op: "DmaMemcpy"
+  input: "tensor_18_/placeholder/0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "32"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_18_/placeholder/0  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131072, 8192, 8192, 4]  |  data = 0, sizeInBytes = 131072  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xc0000000000  |  userMemorySection(type=Persistent, id=12)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_18_/placeholder/0_memcpy_4907  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 8196, 4]  |  data = 0, sizeInBytes = 131132  |  isAliased = tensor_19_id_1956_aten__view, type = alias, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "Reshape2438"
+  op: "Reshape"
+  input: "tensor_18_/placeholder/0_memcpy_4907_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "33"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_18_/placeholder/0_memcpy_4907  |  Sizes = [16,1,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 8196, 4]  |  data = 0, sizeInBytes = 131132  |  isAliased = tensor_19_id_1956_aten__view, type = alias, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_19_id_1956_aten__view  |  Sizes = [16,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131072  |  isAliased = tensor_20_id_10582_aten__cat, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "tensor_17_memcpy_4905_internal"
+  op: "DmaMemcpy"
+  input: "TPC2437_reshape_TPC_out0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "34"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_17  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [64, 4, 4]  |  data = 0, sizeInBytes = 64  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xb0000000000  |  userMemorySection(type=Persistent, id=11)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_17_memcpy_4905  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_20_id_10582_aten__cat, type = concat, offset: 8192  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+}
+node {
+  name: "Concatenate2439"
+  op: "Concatenate"
+  input: "Reshape2438"
+  input: "tensor_17_memcpy_4905_internal"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "35"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_19_id_1956_aten__view  |  Sizes = [16,2048]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131072  |  isAliased = tensor_20_id_10582_aten__cat, type = concat, offset: 0  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "tensor_17_memcpy_4905  |  Sizes = [16,1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 64  |  isAliased = tensor_20_id_10582_aten__cat, type = concat, offset: 8192  |  location = in DRAM  |  isSparseLayout  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_20_id_10582_aten__cat  |  Sizes = [16,2049]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [131136, 8196, 4]  |  data = 0, sizeInBytes = 131136  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xd0000000000  |  userMemorySection(type=Persistent, id=13)  |  "
+    }
+  }
+}
+node {
+  name: "tensor_20_id_10582_aten__cat"
+  op: "OutputTensor"
+  input: "Concatenate2439"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 2049
+        }
+        dim {
+          size: 16
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "tensor_21_/placeholder/0"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
+node {
+  name: "TPC2443_complex/add_fwd_i32_0"
+  op: "add_fwd_i32"
+  input: "Slice2441"
+  input: "tensor_21_/placeholder/0"
+  attr {
+    key: "Bundle_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "Exec_idx"
+    value {
+      s: "36"
+    }
+  }
+  attr {
+    key: "Op_idx"
+    value {
+      s: "N/A"
+    }
+  }
+  attr {
+    key: "inputTensor:0"
+    value {
+      s: "tensor_25_id_10586_aten__slice  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [8192, 4]  |  data = 0, sizeInBytes = 4  |  isAliased = tensor_24_/placeholder/0, type = slice, offset: 8188  |  location = in DRAM  |  "
+    }
+  }
+  attr {
+    key: "inputTensor:1"
+    value {
+      s: "tensor_21_/placeholder/0  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  isPersistent  |  location = in DRAM  |  dramOffset = 0xe0000000000  |  userMemorySection(type=Persistent, id=14)  |  "
+    }
+  }
+  attr {
+    key: "outputTensor:0"
+    value {
+      s: "tensor_28_id_10588_hpu__add  |  Sizes = [1]  |  int32  |  expBias = 0, scale = 1  |    |  ModelParam = 0  |  strides = [4, 4]  |  data = 0, sizeInBytes = 4  |  isPersistent  |  location = in DRAM  |  dramOffset = 0x100000000000  |  userMemorySection(type=Persistent, id=16)  |  "
+    }
+  }
+}
+node {
+  name: "tensor_28_id_10588_hpu__add"
+  op: "OutputTensor"
+  input: "TPC2443_complex/add_fwd_i32_0"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+  attr {
+    key: "synDataType"
+    value {
+      s: "int32"
+    }
+  }
+}
