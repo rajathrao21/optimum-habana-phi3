@@ -190,7 +190,7 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-class GaudiPhi3LongRoPEScaledRotaryEmbedding(Phi3RotaryEmbedding):
+class GaudiPhi3LongRoPEScaledRotaryEmbedding(GaudiPhi3RotaryEmbedding):
     """
         Modified from modeling_phi3.Phi3LongRoPEScaledRotaryEmbedding: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
     """
