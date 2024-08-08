@@ -263,7 +263,12 @@ class GaudiPhi3Attention(Phi3Attention):
         else:
             scaling_type = self.config.rope_scaling["type"]
             if scaling_type == "longrope":
-                self.rotary_emb = GaudiPhi3LongRoPEScaledRotaryEmbedding(self.head_dim, self.config)
+                # self.rotary_emb = GaudiPhi3LongRoPEScaledRotaryEmbedding(self.head_dim, self.config)
+                self.rotary_emb = GaudiPhi3RotaryEmbedding(
+                    self.head_dim,
+                    max_position_embeddings=self.max_position_embeddings,
+                    base=self.rope_theta,
+                )
             else:
                 raise ValueError(f"Unknown RoPE scaling type {scaling_type}")
 
