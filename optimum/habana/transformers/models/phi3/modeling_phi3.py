@@ -158,6 +158,82 @@ class KVCache(torch.nn.Module):
         return self.update(self.cache, cur, dim, idx, self.inp_seq_len)
 
 
+class GaudiPhi3RotaryEmbedding(nn.Module):
+    """
+        Copied from modeling_phi3.Phi3RotaryEmbedding: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
+    """
+    def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None):
+        super().__init__()
+
+        self.dim = dim
+        self.max_position_embeddings = max_position_embeddings
+        self.base = base
+
+        inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2, dtype=torch.int64).float() / self.dim))
+        self.register_buffer("inv_freq", tensor=inv_freq, persistent=False)
+
+    @torch.no_grad()
+    def forward(self, x, position_ids, seq_len=None):
+        # x: [bs, num_attention_heads, seq_len, head_size]
+        self.inv_freq.to(x.device)
+        inv_freq_expanded = self.inv_freq[None, :, None].float().expand(position_ids.shape[0], -1, 1)
+        position_ids_expanded = position_ids[:, None, :].float()
+        # Force float32 since bfloat16 loses precision on long contexts
+        # See https://github.com/huggingface/transformers/pull/29285
+        device_type = x.device.type
+        device_type = device_type if isinstance(device_type, str) and device_type != "mps" else "cpu"
+        with torch.autocast(device_type=device_type, enabled=False):
+            freqs = (inv_freq_expanded.float() @ position_ids_expanded.float()).transpose(1, 2)
+            emb = torch.cat((freqs, freqs), dim=-1)
+            cos = emb.cos()
+            sin = emb.sin()
+        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
+
+
+class GaudiPhi3LongRoPEScaledRotaryEmbedding(Phi3RotaryEmbedding):
+    """
+        Modified from modeling_phi3.Phi3LongRoPEScaledRotaryEmbedding: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
+    """
+    def __init__(self, dim, config, device=None):
+        super().__init__(dim, config.max_position_embeddings, config.rope_theta, device)
+
+        self.short_factor = config.rope_scaling["short_factor"]
+        self.long_factor = config.rope_scaling["long_factor"]
+        self.original_max_position_embeddings = config.original_max_position_embeddings
+
+    @torch.no_grad()
+    def forward(self, x, position_ids, seq_len=None):
+        seq_len = torch.max(position_ids) + 1
+        if seq_len > self.original_max_position_embeddings:
+            ext_factors = torch.tensor(self.long_factor, dtype=torch.float32, device=x.device)
+        else:
+            ext_factors = torch.tensor(self.short_factor, dtype=torch.float32, device=x.device)
+
+        inv_freq_shape = torch.arange(0, self.dim, 2, dtype=torch.int64, device=x.device).float() / self.dim
+        self.inv_freq = 1.0 / (ext_factors * self.base**inv_freq_shape)
+
+        inv_freq_expanded = self.inv_freq[None, :, None].float().expand(position_ids.shape[0], -1, 1)
+        position_ids_expanded = position_ids[:, None, :].float()
+
+        # Force float32 since bfloat16 loses precision on long contexts
+        # See https://github.com/huggingface/transformers/pull/29285
+        device_type = x.device.type
+        device_type = device_type if isinstance(device_type, str) and device_type != "mps" else "cpu"
+        with torch.autocast(device_type=device_type, enabled=False):
+            freqs = (inv_freq_expanded.float() @ position_ids_expanded.float()).transpose(1, 2)
+            emb = torch.cat((freqs, freqs), dim=-1)
+
+            scale = self.max_position_embeddings / self.original_max_position_embeddings
+            if scale <= 1.0:
+                scaling_factor = 1.0
+            else:
+                scaling_factor = math.sqrt(1 + math.log(scale) / math.log(self.original_max_position_embeddings))
+
+            cos = emb.cos() * scaling_factor
+            sin = emb.sin() * scaling_factor
+        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
+	    
+
 class GaudiPhi3Attention(Phi3Attention):
     def __init__(self, config: Phi3Config, layer_idx: Optional[int] = None):
         super().__init__(config, layer_idx)
@@ -173,6 +249,20 @@ class GaudiPhi3Attention(Phi3Attention):
         dtype = self.config.torch_dtype
         self.k_cache.allocate(inp_seq_len, dtype, device, cache_shape)
         self.v_cache.allocate(inp_seq_len, dtype, device, cache_shape)
+
+    def _init_rope(self):
+        if self.rope_scaling is None:
+            self.rotary_emb = GaudiPhi3RotaryEmbedding(
+                self.head_dim,
+                max_position_embeddings=self.max_position_embeddings,
+                base=self.rope_theta,
+            )
+        else:
+            scaling_type = self.config.rope_scaling["type"]
+            if scaling_type == "longrope":
+                self.rotary_emb = GaudiPhi3LongRoPEScaledRotaryEmbedding(self.head_dim, self.config)
+            else:
+                raise ValueError(f"Unknown RoPE scaling type {scaling_type}")
 
     def forward(
         self,
