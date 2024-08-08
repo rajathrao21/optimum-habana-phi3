@@ -203,7 +203,10 @@ class GaudiPhi3LongRoPEScaledRotaryEmbedding(GaudiPhi3RotaryEmbedding):
 
     @torch.no_grad()
     def forward(self, x, position_ids, seq_len=None):
+        print(seq_len)
         seq_len = torch.max(position_ids) + 1
+        print(seq_len)
+        print(self.original_max_position_embeddings)
         if seq_len > self.original_max_position_embeddings:
             ext_factors = torch.tensor(self.long_factor, dtype=torch.float32, device=x.device)
         else:
