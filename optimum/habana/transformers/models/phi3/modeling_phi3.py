@@ -167,6 +167,7 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
 
         self.dim = dim
         self.max_position_embeddings = max_position_embeddings
+        self.max_seq_len_cached = max_position_embeddings
         self.base = base
 
         inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2, dtype=torch.int64).float() / self.dim))
