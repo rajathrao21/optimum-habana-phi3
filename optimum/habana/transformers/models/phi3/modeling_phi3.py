@@ -172,11 +172,35 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
         inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2, dtype=torch.int64).float() / self.dim))
         self.register_buffer("inv_freq", tensor=inv_freq, persistent=False)
 
+        # Build here to make `torch.jit.trace` work.
+        self._set_cos_sin_cache(
+            seq_len=self.max_seq_len_cached, device=self.inv_freq.device, dtype=torch.get_default_dtype()
+        )
+
+    def _set_cos_sin_cache(self, seq_len, device, dtype):
+        self.max_seq_len_cached = seq_len
+        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
+
+        freqs = torch.outer(t, self.inv_freq)
+        # Different from paper, but it uses a different permutation in order to obtain the same calculation
+        emb = torch.cat((freqs, freqs), dim=-1)
+        self.register_buffer("_cos_cached", emb.cos().to(dtype), persistent=False)
+        self.register_buffer("_sin_cached", emb.sin().to(dtype), persistent=False)
+
     @torch.no_grad()
     def forward(self, x, position_ids, seq_len=None):
         # x: [bs, num_attention_heads, seq_len, head_size]
         self.inv_freq.to(x.device)
-        inv_freq_expanded = self.inv_freq[None, :, None].float().expand(position_ids.shape[0], -1, 1)
+
+        if seq_len > self.max_seq_len_cached:
+            self._set_cos_sin_cache(seq_len=seq_len, device=x.device, dtype=x.dtype)
+
+        return (
+            self._cos_cached[:seq_len].to(dtype=x.dtype) * self.attention_scaling,
+            self._sin_cached[:seq_len].to(dtype=x.dtype) * self.attention_scaling,
+        )
+
+        '''inv_freq_expanded = self.inv_freq[None, :, None].float().expand(position_ids.shape[0], -1, 1)
         position_ids_expanded = position_ids[:, None, :].float()
         # Force float32 since bfloat16 loses precision on long contexts
         # See https://github.com/huggingface/transformers/pull/29285
@@ -187,7 +211,7 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
             emb = torch.cat((freqs, freqs), dim=-1)
             cos = emb.cos()
             sin = emb.sin()
-        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
+        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)'''
 
 
 class GaudiPhi3LongRoPEScaledRotaryEmbedding(GaudiPhi3RotaryEmbedding):
@@ -246,13 +270,6 @@ class GaudiPhi3Attention(Phi3Attention):
         self.v_cache = KVCache()
         self.inp_seq_len = -1
 
-    def allocate_kv_cache(self, batch_size, max_seq_len, inp_seq_len):
-        cache_shape = (batch_size, self.num_key_value_heads, max_seq_len, self.head_dim)
-        device = self.o_proj.weight.device
-        dtype = self.config.torch_dtype
-        self.k_cache.allocate(inp_seq_len, dtype, device, cache_shape)
-        self.v_cache.allocate(inp_seq_len, dtype, device, cache_shape)
-
     def _init_rope(self):
         if self.rope_scaling is None:
             self.rotary_emb = GaudiPhi3RotaryEmbedding(
@@ -271,6 +288,13 @@ class GaudiPhi3Attention(Phi3Attention):
                 )
             else:
                 raise ValueError(f"Unknown RoPE scaling type {scaling_type}")
+
+    def allocate_kv_cache(self, batch_size, max_seq_len, inp_seq_len):
+        cache_shape = (batch_size, self.num_key_value_heads, max_seq_len, self.head_dim)
+        device = self.o_proj.weight.device
+        dtype = self.config.torch_dtype
+        self.k_cache.allocate(inp_seq_len, dtype, device, cache_shape)
+        self.v_cache.allocate(inp_seq_len, dtype, device, cache_shape)
 
     def forward(
         self,
