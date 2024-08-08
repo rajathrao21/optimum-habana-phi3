@@ -35,6 +35,7 @@ from transformers.models.phi3.modeling_phi3 import (
     Phi3RMSNorm,
     Phi3ForCausalLM,
     Phi3Model,
+    Phi3RotaryEmbedding,
     apply_rotary_pos_emb
 )
 from transformers.modeling_utils import PreTrainedModel
@@ -158,7 +159,7 @@ class KVCache(torch.nn.Module):
         return self.update(self.cache, cur, dim, idx, self.inp_seq_len)
 
 
-class GaudiPhi3RotaryEmbedding(nn.Module):
+'''class GaudiPhi3RotaryEmbedding(nn.Module):
     """
         Copied from modeling_phi3.Phi3RotaryEmbedding: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
     """
@@ -167,26 +168,10 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
 
         self.dim = dim
         self.max_position_embeddings = max_position_embeddings
-        self.max_seq_len_cached = max_position_embeddings
         self.base = base
 
         inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2, dtype=torch.int64).float() / self.dim))
         self.register_buffer("inv_freq", tensor=inv_freq, persistent=False)
-
-        '''# Build here to make `torch.jit.trace` work.
-        self._set_cos_sin_cache(
-            seq_len=self.max_seq_len_cached, device=self.inv_freq.device, dtype=torch.get_default_dtype()
-        )'''
-
-    '''def _set_cos_sin_cache(self, seq_len, device, dtype):
-        self.max_seq_len_cached = seq_len
-        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
-
-        freqs = torch.outer(t, self.inv_freq)
-        # Different from paper, but it uses a different permutation in order to obtain the same calculation
-        emb = torch.cat((freqs, freqs), dim=-1)
-        self.register_buffer("_cos_cached", emb.cos().to(dtype), persistent=False)
-        self.register_buffer("_sin_cached", emb.sin().to(dtype), persistent=False)'''
 
     @torch.no_grad()
     def forward(self, x, position_ids, seq_len=None):
@@ -204,18 +189,10 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
             emb = torch.cat((freqs, freqs), dim=-1)
             cos = emb.cos()
             sin = emb.sin()
-        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
-
-        '''if seq_len > self.max_seq_len_cached:
-            self._set_cos_sin_cache(seq_len=seq_len, device=x.device, dtype=x.dtype)
-
-        return (
-            self._cos_cached[:seq_len].to(dtype=x.dtype),
-            self._sin_cached[:seq_len].to(dtype=x.dtype),
-        )'''
+        return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)'''
 
 
-class GaudiPhi3LongRoPEScaledRotaryEmbedding(GaudiPhi3RotaryEmbedding):
+class GaudiPhi3LongRoPEScaledRotaryEmbedding(Phi3RotaryEmbedding):
     """
         Modified from modeling_phi3.Phi3LongRoPEScaledRotaryEmbedding: https://github.com/huggingface/transformers/blob/v4.43.4/src/transformers/models/phi3/modeling_phi3.py
     """
@@ -273,7 +250,7 @@ class GaudiPhi3Attention(Phi3Attention):
 
     def _init_rope(self):
         if self.rope_scaling is None:
-            self.rotary_emb = GaudiPhi3RotaryEmbedding(
+            self.rotary_emb = Phi3RotaryEmbedding(
                 self.head_dim,
                 max_position_embeddings=self.max_position_embeddings,
                 base=self.rope_theta,
@@ -282,7 +259,7 @@ class GaudiPhi3Attention(Phi3Attention):
             scaling_type = self.config.rope_scaling["type"]
             if scaling_type == "longrope":
                 # self.rotary_emb = GaudiPhi3LongRoPEScaledRotaryEmbedding(self.head_dim, self.config)
-                self.rotary_emb = GaudiPhi3RotaryEmbedding(
+                self.rotary_emb = Phi3RotaryEmbedding(
                     self.head_dim,
                     max_position_embeddings=self.max_position_embeddings,
                     base=self.rope_theta,
