@@ -210,8 +210,8 @@ class GaudiPhi3RotaryEmbedding(nn.Module):
             self._set_cos_sin_cache(seq_len=seq_len, device=x.device, dtype=x.dtype)
 
         return (
-            self._cos_cached[:seq_len].to(dtype=x.dtype) * self.attention_scaling,
-            self._sin_cached[:seq_len].to(dtype=x.dtype) * self.attention_scaling,
+            self._cos_cached[:seq_len].to(dtype=x.dtype),
+            self._sin_cached[:seq_len].to(dtype=x.dtype),
         )
 
 
