@@ -93,7 +93,7 @@ def main():
     config = AutoConfig.from_pretrained(args.model_name_or_path, max_length=max_length)
     model = AutoModelForCausalLM.from_config(config)
     if args.half:
-        model = model.to(dtype=torch.float16, device=args.device)
+        model = model.half().to(args.device)
     elif args.bf16:
         model = model.to(dtype=torch.bfloat16, device=args.device)
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
@@ -121,7 +121,7 @@ def main():
             input_tokens = tokenizer.batch_encode_plus(input_sentences, return_tensors="pt", padding=True)
 
         if args.half:
-            input_tokens = {key: value.to(dtype=torch.float16, device=args.device) for key, value in input_tokens.items()}
+            input_tokens = {key: value.half().to(args.device) for key, value in input_tokens.items()}
         elif args.bf16:
             input_tokens = {key: value.to(dtype=torch.bfloat16, device=args.device) for key, value in input_tokens.items()}
 
