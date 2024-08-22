@@ -14,6 +14,11 @@ def get_args(parser):
         help="Path to pre-trained model (on the HF Hub or locally).",
     )
     parser.add_argument(
+        "--half",
+        action="store_true",
+        help="Whether to perform generation in float16 (half) precision.",
+    )
+    parser.add_argument(
         "--bf16",
         action="store_true",
         help="Whether to perform generation in bf16 precision.",
@@ -86,7 +91,11 @@ def main():
 
     max_length = args.max_input_tokens + args.max_new_tokens
     config = AutoConfig.from_pretrained(args.model_name_or_path, max_length=max_length)
-    model = AutoModelForCausalLM.from_config(config).to(dtype=torch.bfloat16 if args.bf16 else torch.float32, device=args.device)
+    model = AutoModelForCausalLM.from_config(config)
+    if args.half:
+        model = model.to(dtype=torch.float16, device=args.device)
+    elif args.bf16:
+        model = model.to(dtype=torch.bfloat16, device=args.device)
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
 
     input_sentences = book_dataset(args)
@@ -111,7 +120,9 @@ def main():
         else:
             input_tokens = tokenizer.batch_encode_plus(input_sentences, return_tensors="pt", padding=True)
 
-        if args.bf16:
+        if args.half:
+            input_tokens = {key: value.to(dtype=torch.float16, device=args.device) for key, value in input_tokens.items()}
+        elif args.bf16:
             input_tokens = {key: value.to(dtype=torch.bfloat16, device=args.device) for key, value in input_tokens.items()}
 
         if not reduce_recompile:
