@@ -93,9 +93,10 @@ def main():
     config = AutoConfig.from_pretrained(args.model_name_or_path, max_length=max_length)
     model = AutoModelForCausalLM.from_config(config)
     if args.half:
-        model = model.half().to(args.device)
+        model = model.half()
     elif args.bf16:
-        model = model.to(dtype=torch.bfloat16, device=args.device)
+        model = model.to(dtype=torch.bfloat16)
+    model = model.to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
 
     input_sentences = book_dataset(args)
